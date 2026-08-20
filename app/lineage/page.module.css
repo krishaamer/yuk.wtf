@@ -1,0 +1,396 @@
+.shell {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 18px clamp(18px, 4vw, 44px) 34px;
+  min-height: 100svh;
+}
+
+.topbar,
+.footer,
+.links,
+.legend {
+  display: flex;
+  align-items: center;
+}
+
+.topbar {
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 54px;
+}
+
+.wordmark {
+  color: var(--ink);
+  font-weight: 950;
+  font-size: clamp(24px, 3vw, 38px);
+  letter-spacing: -0.08em;
+  text-decoration: none;
+}
+
+.wordmark span {
+  color: var(--bruise);
+}
+
+.back,
+.links a,
+.node a {
+  color: var(--ink);
+  font-weight: 900;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.back {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hero {
+  max-width: 950px;
+  padding: 12px 0 58px;
+}
+
+.eyebrow,
+.kicker,
+.year,
+.laneHeader span {
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 10px 0 22px;
+  max-width: 940px;
+  font-size: clamp(62px, 10vw, 132px);
+  line-height: 0.82;
+  letter-spacing: -0.085em;
+}
+
+.intro {
+  max-width: 790px;
+  margin: 0;
+  font-size: clamp(18px, 2.5vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.legend {
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1.5px solid var(--ink);
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.solidLine,
+.dashedLine {
+  display: inline-block;
+  width: 38px;
+  border-top: 3px solid var(--ink);
+}
+
+.dashedLine {
+  border-top-style: dashed;
+}
+
+.origin,
+.yukNode {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: clamp(18px, 4vw, 48px);
+  align-items: start;
+  padding: clamp(24px, 4vw, 42px);
+  border: 2.5px solid var(--ink);
+  border-radius: 30px;
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.origin {
+  background: var(--acid);
+}
+
+.origin h2,
+.yukNode h2,
+.precision h2 {
+  margin: 4px 0 10px;
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+
+.origin p:last-child,
+.yukNode p:last-child,
+.precisionCopy p {
+  max-width: 760px;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.lanes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 44px 0;
+  align-items: stretch;
+}
+
+.lane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 16px;
+  border: 2px solid var(--ink);
+  border-radius: 28px;
+}
+
+.dataLane {
+  background: #ebe6ff;
+}
+
+.captureLane {
+  background: #ffffff;
+}
+
+.aiLane {
+  background: #ffe0ef;
+}
+
+.laneHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  padding: 4px 4px 16px;
+}
+
+.laneHeader h2 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -0.055em;
+}
+
+.node {
+  padding: 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 20px;
+  background: var(--paper);
+}
+
+.node h3 {
+  margin: 5px 0 8px;
+  font-size: clamp(23px, 2.3vw, 31px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.node p:not(.year) {
+  margin: 0 0 13px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.node code {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 4px 7px;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: white;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.year {
+  margin: 0;
+  color: var(--muted);
+}
+
+.gitNode {
+  background: var(--acid);
+}
+
+.connector {
+  position: relative;
+  flex: 1 0 56px;
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.connector::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  border-left: 2px solid var(--ink);
+}
+
+.connector span {
+  position: relative;
+  z-index: 1;
+  padding: 4px 7px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.conceptConnector::before {
+  border-left-style: dashed;
+}
+
+.gitConnector::before {
+  border-left-width: 4px;
+}
+
+.forkGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.forkGrid .node {
+  padding: 14px;
+}
+
+.forkGrid .node h3 {
+  font-size: 21px;
+}
+
+.yukNode {
+  position: relative;
+  grid-template-columns: 120px 1fr;
+  background: var(--slime);
+  overflow: hidden;
+}
+
+.yukFace {
+  display: grid;
+  place-items: center;
+  width: 100px;
+  aspect-ratio: 1;
+  border: 2.5px solid var(--ink);
+  border-radius: 47% 53% 42% 58% / 39% 45% 55% 61%;
+  background: var(--acid);
+  font-size: 52px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.precision {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(28px, 7vw, 80px);
+  margin: 64px 0 52px;
+  padding-top: 36px;
+  border-top: 2px solid var(--ink);
+}
+
+.precision h2 {
+  font-size: clamp(38px, 5vw, 64px);
+}
+
+.precisionCopy p {
+  margin-top: 0;
+}
+
+.links {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 54px;
+}
+
+.links a {
+  display: inline-flex;
+  padding: 10px 13px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: white;
+  font-size: 12px;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.footer {
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0 4px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .lanes {
+    grid-template-columns: 1fr;
+  }
+
+  .lane {
+    padding: 14px;
+  }
+
+  .connector {
+    flex-basis: 48px;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    padding-inline: 14px;
+  }
+
+  .topbar {
+    padding-bottom: 32px;
+  }
+
+  .hero {
+    padding-bottom: 38px;
+  }
+
+  .origin,
+  .yukNode,
+  .precision {
+    grid-template-columns: 1fr;
+  }
+
+  .origin,
+  .yukNode {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .forkGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .precision {
+    gap: 10px;
+    margin-top: 48px;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
