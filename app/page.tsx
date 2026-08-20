@@ -239,6 +239,12 @@ export default function Home() {
       <footer>
         <span>yuk.wtf</span>
         <span>trash is data</span>
+        <a
+          href="/lineage"
+          style={{ color: "inherit", fontWeight: 800, textDecorationThickness: "1px", textUnderlineOffset: "3px" }}
+        >
+          lineage ↗
+        </a>
       </footer>
     </main>
   );
