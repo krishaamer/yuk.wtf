@@ -6,12 +6,13 @@ The old World Cleanup web client is now the home of the YUK trash monster MVP.
 
 - camera / photo-library input
 - animated trash monster that reacts while feeding
+- real AI image analysis through `/api/analyze`
 - sample trash objects for an instant end-to-end demo
 - material + disposal + fate result card
 - evolving monster traits based on the materials you feed it
 - local browser history as a tiny personal material autobiography
 - gross YUK language and emoji identity: 💩 🤢 🤮
-- safe fallback when a real vision service is not configured
+- safe fallback when the vision service is not configured or fails
 
 ## Run locally
 
@@ -22,14 +23,30 @@ npm start
 
 The YUK entry screen no longer requires the legacy World Cleanup backend to boot.
 
-## Real photo analysis
+For the complete serverless flow, use a Vercel-compatible local environment so `/api/analyze` is available. A plain Create React App dev server will still show the UI and safely fall back if that route is missing.
 
-Set `REACT_APP_YUK_ANALYZE_URL` to an HTTP endpoint that accepts a multipart form upload:
+## AI vision
+
+The bundled `/api/analyze` function accepts a multipart form upload:
 
 - `image`: uploaded image file
 - `locale`: browser language, for example `en-US`
 
-The endpoint should return JSON shaped roughly like this:
+Set this server-side environment variable before deploying:
+
+```bash
+OPENAI_API_KEY=...
+```
+
+Optional:
+
+```bash
+OPENAI_MODEL=gpt-5.4-nano
+```
+
+`gpt-5.4-nano` is the default because this is mostly visual classification + structured extraction. The endpoint requests strict JSON and keeps disposal guidance conservative when local rules cannot be verified.
+
+The response shape is:
 
 ```json
 {
@@ -39,7 +56,7 @@ The endpoint should return JSON shaped roughly like this:
   "materialKey": "plastic",
   "bin": "packaging recycling or deposit return",
   "fate": "What usually happens to the material next.",
-  "verdict": "YUK's short reaction.",
+  "verdict": "yuk's short reaction 🤢",
   "tip": "One useful action for the person."
 }
 ```
