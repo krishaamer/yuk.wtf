@@ -1,52 +1,50 @@
-![World Cleanup Day](https://www.letsdoitworld.org/wp-content/uploads/2017/04/header.png)
-# World's Largest Civic Action: World Cleanup Day
+# YUK
 
-Over 20 million trash heroes have already cleaned up more than 500 000 tonnes of trash in over 100 countries! The movement against pollution is growing fast and we're now building the World Cleanup App and Platform for the hundreds of millions of people people joining the World Cleanup Day on **15th of September 2018**. 
+**See waste. Map it. Fix it.**
 
-Together we will get rid of trash once and for all, save lives, improve health & reduce costs. Read below on how you can participate! Let's do it! 😃 
+YUK is a 2026 continuation of the waste-mapping software lineage developed for World Cleanup Day. Its public home is **https://yuk.wtf**.
 
-## 1: Download World Cleanup and Start Mapping Trash
+This repository intentionally preserves the project's real Git genealogy rather than copying the old code into a clean repository.
 
-<a href="https://play.google.com/store/apps/details?id=com.teeme.ldi" target="_blank"><img src="https://s3.eu-central-1.amazonaws.com/letsdoitworld-gfx/google%402x.png" alt="World Cleanup App for Android" /></a>
+## Lineage
 
-<a href="https://itunes.apple.com/us/app/world-cleanup/id1237553057" target="_blank"><img src="https://s3.eu-central-1.amazonaws.com/letsdoitworld-gfx/apple%402x.png" alt="World Cleanup App for iOS" /></a>
+Two surviving 2018 development generations are preserved as immutable archive branches:
 
-Watch this video on how mapping works:
+- [`archive/haamer-expo-2018`](../../tree/archive/haamer-expo-2018) — the May 28, 2018 Haamer/Open Source snapshot, ending at `05c2832`.
+- [`archive/wcd-react-native-2018`](../../tree/archive/wcd-react-native-2018) — the later World Cleanup / React Native generation, ending at `1896cb0` on August 2, 2018.
 
-<a href="https://www.youtube.com/watch?feature=player_embedded&v=YnPvOVzbQpA
-" target="_blank"><img src="https://s3.eu-central-1.amazonaws.com/lets-do-it-world/world-cleanup-day-app-video.png" 
-alt="Let's Do It: World Cleanup Day!" width="100%" border="0" /></a>
+The histories are explicitly reunited by commit `b91228a` (`history: reunite the 2018 World Cleanup lineages`). The commit was created in 2026 and deliberately records both historical heads as parents. It does **not** claim that this merge happened in 2018.
 
-![World Cleanup Day](https://www.letsdoitworld.org/wp-content/uploads/2017/04/content.png)
+`main` begins at that reconciliation point. New YUK development will happen from there.
 
-## 2: Help us Build the App
+## What YUK inherits
 
-We need your help to make the app better! If you're a developer you can join us now by building the Share feature described below. Download the code and submit your ideas and pull requests. We're very happy to welcome you to the team!
+YUK keeps the original ambition — make environmental waste observable and actionable — while changing the core model from a collection of reports into a continuously updated model of physical waste in the world.
 
-![World Cleanup Day](https://s3.eu-central-1.amazonaws.com/letsdoitworld-gfx/github_poster.jpg)
+The central distinction is:
 
-Thank you for considering contributing to World Cleanup Day Mobile App! See the [CONTRIBUTING.md](https://github.com/letsdoitworld/World-Cleanup-Day/blob/master/CONTRIBUTING.md) for more details and please <a href="mailto:kristiina@letsdoitworld.org">request access to</a> the World Cleanup Day Asana.
+- **Site** — a persistent real-world place or waste entity.
+- **Observation** — timestamped evidence about that site from a person, organization, import, camera or model.
 
-## 3: Tell Your Friends!
-Join the movement and let's clean up the World together!
+A cleanup is not deletion. It is an event that changes the believed state of a site. A site can be verified clean, reappear, merge with another site, or accumulate new observations over time.
 
-* Facebook: https://www.facebook.com/worldcleanupday2018/
-* Twitter: https://twitter.com/letsdoitworld/
-* Instagram: https://www.instagram.com/worldcleanupday2018/
-* YouTube: https://www.youtube.com/letsdoitworld/
-* Flickr: https://www.flickr.com/letsdoitworld/
-* Wikipedia: https://en.wikipedia.org/wiki/Let%27s_Do_It!_World
-* Homepage: https://www.worldcleanupday.org/
+See [`docs/architecture/YUK.md`](docs/architecture/YUK.md).
 
-## API
-See the [API docs](http://ldiw-api.s3-website.eu-central-1.amazonaws.com/)
+## Archaeology
 
-## Translations
-See [translate.worldcleanupday.org](https://translate.worldcleanupday.org/ )
+The repository is also a historical artifact. Start with:
 
-## Roadmap
-See [Roadmap.md](https://github.com/letsdoitworld/World-Cleanup-Day/blob/master/ROADMAP.md)
+- [`docs/archaeology/README.md`](docs/archaeology/README.md)
+- [`docs/archaeology/TIMELINE.md`](docs/archaeology/TIMELINE.md)
+- [`docs/archaeology/INHERITANCE.md`](docs/archaeology/INHERITANCE.md)
+- [`docs/archaeology/SECURITY.md`](docs/archaeology/SECURITY.md)
+
+The historical runtime code is preserved for provenance, not as a dependency recommendation. Much of it predates modern mobile, security and infrastructure practice.
+
+## Status
+
+YUK is at the archaeology and architecture stage. The next milestone is **`YUK: begin again`**: remove obsolete runtime code from `main` while preserving all historical material through Git history and the archive branches, then introduce the modern implementation.
 
 ## License
 
-[GPL-3.0 license](https://opensource.org/licenses/GPL-3.0)
+Historical code retains its existing GPL-3.0 licensing and notices. New code must preserve applicable obligations from inherited GPL-licensed material.
