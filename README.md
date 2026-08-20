@@ -1,54 +1,62 @@
-![World Cleanup Day](https://www.letsdoitworld.org/wp-content/uploads/2017/04/header.png)
-# World's Largest Civic Action: World Cleanup Day
+# yuk.wtf 💩🤢🤮
 
-[![Join the chat at https://gitter.im/letsdoitworld/World-Cleanup-Day](https://badges.gitter.im/letsdoitworld/World-Cleanup-Day.svg)](https://gitter.im/letsdoitworld/World-Cleanup-Day?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+A fresh trash-monster app.
 
-Over 20 million trash heroes have already cleaned up more than 500 000 tonnes of trash in over 100 countries! The movement against pollution is growing fast and we're now building the World Cleanup App and Platform for the hundreds of millions of people people joining the World Cleanup Day on **15th of September 2018**. 
+Point the camera at something you are about to throw away. YUK eats the photo, identifies the object and materials, gives best-effort disposal guidance, and remembers what it has eaten on that device.
 
-Together we will get rid of trash once and for all, save lives, improve health & reduce costs. Read below on how you can participate! Let's do it! 😃 
+This branch intentionally starts with a clean application tree instead of modernizing the old 2018 app.
 
-## 1: Download World Cleanup and Start Mapping Trash
+## The loop
 
-<a href="https://play.google.com/store/apps/details?id=com.teeme.ldi" target="_blank"><img src="https://s3.eu-central-1.amazonaws.com/letsdoitworld-gfx/google%402x.png" alt="World Cleanup App for Android" /></a>
+1. Show YUK trash.
+2. Feed YUK the photo.
+3. YUK analyses the object and reacts with 💩, 🤢, or 🤮.
+4. Get a likely bin, destination, explanation, and lower-waste alternative.
+5. Build a tiny local material autobiography over time.
 
-<a href="https://itunes.apple.com/us/app/world-cleanup/id1237553057" target="_blank"><img src="https://s3.eu-central-1.amazonaws.com/letsdoitworld-gfx/apple%402x.png" alt="World Cleanup App for iOS" /></a>
+## Run it
 
-Watch this video on how mapping works:
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-<a href="https://www.youtube.com/watch?feature=player_embedded&v=YnPvOVzbQpA
-" target="_blank"><img src="https://s3.eu-central-1.amazonaws.com/lets-do-it-world/world-cleanup-day-app-video.png" 
-alt="Let's Do It: World Cleanup Day!" width="100%" border="0" /></a>
+Set:
 
-![World Cleanup Day](https://www.letsdoitworld.org/wp-content/uploads/2017/04/content.png)
+```bash
+OPENAI_API_KEY=...
+OPENAI_VISION_MODEL=gpt-5-mini
+```
 
-## 2: Help us Build the App
+The API key is only read by the server route.
 
-We need your help to make the app better! If you're a developer you can join us now by building the Share feature described below. Download the code and submit your ideas and pull requests. We're very happy to welcome you to the team!
+## Deploy
 
-![World Cleanup Day](https://s3.eu-central-1.amazonaws.com/letsdoitworld-gfx/github_poster.jpg)
+This is a Next.js app and can deploy directly to Vercel. Add `OPENAI_API_KEY` as a server environment variable.
 
-Thank you for considering contributing to World Cleanup Day Mobile App! See the [CONTRIBUTING.md](https://github.com/letsdoitworld/World-Cleanup-Day/blob/master/CONTRIBUTING.md) for more details and please <a href="mailto:kristiina@letsdoitworld.org">request access to</a> the World Cleanup Day Asana.
+## What is real in v0.1
 
-## 3: Tell Your Friends!
-Join the movement and let's clean up the World together!
+- mobile camera / photo picker
+- client-side image downscaling
+- server-side vision analysis through the OpenAI Responses API
+- optional coarse geolocation sent as context
+- 💩 / 🤢 / 🤮 reaction states
+- animated trash monster
+- best-effort disposal + material explanation
+- local device history via `localStorage`
+- responsive mobile-first UI
+- reduced-motion support
 
-* Facebook: https://www.facebook.com/letsdoitworld
-* Twitter: https://twitter.com/letsdoitworld
-* Instagram: https://www.instagram.com/letsdoitworld/
-* YouTube: https://www.youtube.com/letsdoitworld
-* Flickr: https://www.flickr.com/letsdoitworld/
-* Wikipedia: https://en.wikipedia.org/wiki/Let%27s_Do_It!_World
-* Homepage: https://www.letsdoitworld.org/
+## Important limitation
 
-## API
-See the [API docs](http://ldiw-api.s3-website.eu-central-1.amazonaws.com/)
+Waste rules are local and change. The first version asks the model to be explicit about uncertainty and never pretend it knows a municipal rule it cannot establish. A production version should connect to authoritative city / waste-provider datasets and use the model for object/material recognition plus explanation.
 
-## Translations
-See [translate.worldcleanupday.org](https://translate.worldcleanupday.org/ )
+## Next
 
-## Roadmap
-See [Roadmap.md](https://github.com/letsdoitworld/World-Cleanup-Day/blob/master/ROADMAP.md)
-
-## License
-
-[GPL-3.0 license](https://opensource.org/licenses/GPL-3.0)
+- authoritative local waste-rule adapters
+- Supabase account sync and cross-device stomach history
+- richer monster evolution based on material mix
+- streaks / collections without turning this into generic green gamification
+- material and brand statistics
+- public aggregate waste map with privacy controls
