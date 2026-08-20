@@ -21,6 +21,21 @@ Commit `b91228a` was created in 2026 with both historical heads as parents. Its 
 
 This is an **archival reconciliation**, not a historical claim. The two branches were not deliberately maintained as two long-term editions of the product in 2018. The merge commit exists so future Git history can truthfully show that YUK descends from both surviving lines.
 
+## Wider project ecosystem
+
+The repository history is only one part of the story.
+
+Around the same waste-mapping problem, Let’s Do It / World Cleanup work also produced a 2017 Open Data frontend and API, the 2018 WADE AI trash-detection project, and a later TrashAI lineage. Those repositories do not become additional Git parents of YUK, but they are relevant product, data and research ancestors.
+
+See [`ECOSYSTEM.md`](ECOSYSTEM.md) for the wider family tree and the distinction between:
+
+- literal Git ancestry;
+- shared project lineage;
+- open-data inheritance;
+- computer-vision and model inheritance.
+
+The public visual version lives at [`https://yuk.wtf/lineage`](https://yuk.wtf/lineage).
+
 ## Rules for historical material
 
 1. Never rewrite the archive branches.
@@ -30,6 +45,7 @@ This is an **archival reconciliation**, not a historical claim. The two branches
 5. Treat old infrastructure, credentials, signing material and dependencies as archaeological evidence, not operational configuration.
 6. When describing 2018 decisions, distinguish documented facts from later interpretation.
 7. Do not imply YUK is the current official World Cleanup Day application or an official Let’s Do It World product without an explicit contemporary relationship.
+8. Do not describe related Open Data, WADE or TrashAI repositories as YUK Git ancestors unless Git history actually demonstrates that relationship.
 
 ## Why keep this history?
 
