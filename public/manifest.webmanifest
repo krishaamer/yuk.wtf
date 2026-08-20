@@ -1,0 +1,10 @@
+{
+  "name": "YUK.WTF",
+  "short_name": "YUK",
+  "description": "Feed a trash monster your garbage and find out what happens to it.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f0e8",
+  "theme_color": "#d9ff55",
+  "icons": []
+}

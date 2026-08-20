@@ -1,50 +1,84 @@
-# YUK
+# yuk.wtf 💩🤢🤮
 
-**See waste. Map it. Fix it.**
+**Feed trash to YUK. Learn what it is. Learn where it goes.**
 
-YUK is a 2026 continuation of the waste-mapping software lineage developed for World Cleanup Day. Its public home is **https://yuk.wtf**.
+YUK is a fresh trash-monster app built on top of the real historical lineage of the World Cleanup Day waste-mapping software.
 
-This repository intentionally preserves the project's real Git genealogy rather than copying the old code into a clean repository.
+Point the camera at something you are about to throw away. YUK eats the photo, identifies the object and materials, gives best-effort disposal guidance, reacts with 💩, 🤢 or 🤮, and remembers what it has eaten on that device.
 
-## Lineage
+## The loop
 
-Two surviving 2018 development generations are preserved as immutable archive branches:
+1. Show YUK trash.
+2. Feed YUK the photo.
+3. YUK analyses the object and reacts.
+4. Get a likely bin, destination, explanation and lower-waste alternative.
+5. Build a personal material autobiography over time.
 
-- [`archive/haamer-expo-2018`](../../tree/archive/haamer-expo-2018) — the May 28, 2018 Haamer/Open Source snapshot, ending at `05c2832`.
-- [`archive/wcd-react-native-2018`](../../tree/archive/wcd-react-native-2018) — the later World Cleanup / React Native generation, ending at `1896cb0` on August 2, 2018.
+## Run it
 
-The histories are explicitly reunited by commit `b91228a` (`history: reunite the 2018 World Cleanup lineages`). The commit was created in 2026 and deliberately records both historical heads as parents. It does **not** claim that this merge happened in 2018.
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-`main` begins at that reconciliation point. New YUK development will happen from there.
+Set:
 
-## What YUK inherits
+```bash
+OPENAI_API_KEY=...
+OPENAI_VISION_MODEL=gpt-5-mini
+```
 
-YUK keeps the original ambition — make environmental waste observable and actionable — while changing the core model from a collection of reports into a continuously updated model of physical waste in the world.
+The API key is only read by the server route.
 
-The central distinction is:
+## What is real in v0.1
 
-- **Site** — a persistent real-world place or waste entity.
-- **Observation** — timestamped evidence about that site from a person, organization, import, camera or model.
+- mobile camera / photo picker
+- client-side image downscaling
+- server-side vision analysis through the OpenAI Responses API
+- optional coarse geolocation as analysis context
+- 💩 / 🤢 / 🤮 reaction states
+- animated trash monster
+- best-effort disposal + material explanation
+- local device stomach history via `localStorage`
+- responsive mobile-first UI
+- reduced-motion support
 
-A cleanup is not deletion. It is an event that changes the believed state of a site. A site can be verified clean, reappear, merge with another site, or accumulate new observations over time.
+Waste rules are local and change. YUK exposes uncertainty rather than pretending a municipal rule is known. A production version should connect authoritative city and waste-provider datasets while using AI for recognition and explanation.
+
+## Architecture direction
+
+The fresh monster is the new capture and interpretation surface. The broader YUK architecture remains evidence-first: observations, classifications, location, provenance and confidence can later feed a privacy-safe model of physical waste.
 
 See [`docs/architecture/YUK.md`](docs/architecture/YUK.md).
 
-## Archaeology
+## Lineage
 
-The repository is also a historical artifact. Start with:
+This repository intentionally preserves the project's real Git genealogy rather than copying old code into a supposedly clean repository.
+
+Two surviving 2018 development generations are preserved as immutable archive branches:
+
+- [`archive/haamer-expo-2018`](../../tree/archive/haamer-expo-2018), ending at `05c2832`
+- [`archive/wcd-react-native-2018`](../../tree/archive/wcd-react-native-2018), ending at `1896cb0`
+
+The histories were explicitly reunited in 2026 by commit `b91228a`. Historical runtime code remains available through Git history and archive branches, but is no longer part of the active application tree.
+
+For the archaeology, see:
 
 - [`docs/archaeology/README.md`](docs/archaeology/README.md)
 - [`docs/archaeology/TIMELINE.md`](docs/archaeology/TIMELINE.md)
 - [`docs/archaeology/INHERITANCE.md`](docs/archaeology/INHERITANCE.md)
 - [`docs/archaeology/SECURITY.md`](docs/archaeology/SECURITY.md)
 
-The historical runtime code is preserved for provenance, not as a dependency recommendation. Much of it predates modern mobile, security and infrastructure practice.
+## Next
 
-## Status
-
-YUK is at the archaeology and architecture stage. The next milestone is **`YUK: begin again`**: remove obsolete runtime code from `main` while preserving all historical material through Git history and the archive branches, then introduce the modern implementation.
+- authoritative local waste-rule adapters
+- account sync and cross-device stomach history
+- monster evolution based on material mix
+- material and brand statistics
+- connect personal discard observations to the broader YUK observation model
+- public aggregate waste intelligence with privacy controls
 
 ## License
 
-Historical code retains its existing GPL-3.0 licensing and notices. New code must preserve applicable obligations from inherited GPL-licensed material.
+Historical code retains its existing GPL-3.0 licensing and notices. New code preserves applicable obligations from inherited GPL-licensed material.
