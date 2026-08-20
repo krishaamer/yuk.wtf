@@ -54,6 +54,10 @@ See [`docs/architecture/YUK.md`](docs/architecture/YUK.md).
 
 ## Lineage
 
+YUK has two kinds of lineage, and the distinction matters.
+
+### Git ancestry
+
 This repository intentionally preserves the project's real Git genealogy rather than copying old code into a supposedly clean repository.
 
 Two surviving 2018 development generations are preserved as immutable archive branches:
@@ -63,10 +67,24 @@ Two surviving 2018 development generations are preserved as immutable archive br
 
 The histories were explicitly reunited in 2026 by commit `b91228a`. Historical runtime code remains available through Git history and archive branches, but is no longer part of the active application tree.
 
+### Wider project lineage
+
+The same waste-tech ecosystem also produced related open-data and computer-vision work that does **not** share YUK's commit graph:
+
+- [`zerowasteestonia/opendata-web`](https://github.com/zerowasteestonia/opendata-web) and [`zerowasteestonia/opendata-api`](https://github.com/zerowasteestonia/opendata-api), the 2017 Let’s Do It World Open Data frontend and API
+- [`zerowasteestonia/wade-ai`](https://github.com/zerowasteestonia/wade-ai), the 2018 Let’s Do It World work on detecting trash in geolocated images
+- [`opensacorg/trash-ai`](https://github.com/opensacorg/trash-ai), the later TrashAI project inspired by WADE
+- [`zerowasteestonia/trash-ai`](https://github.com/zerowasteestonia/trash-ai), the 2022 Zero Waste Estonia fork of TrashAI
+
+These projects are product, data and research ancestors rather than additional Git parents. They matter because YUK now recombines field capture, open observational data and AI-assisted waste interpretation.
+
+See the visual lineage at [`/lineage`](https://yuk.wtf/lineage) and the detailed notes in [`docs/archaeology/ECOSYSTEM.md`](docs/archaeology/ECOSYSTEM.md).
+
 For the archaeology, see:
 
 - [`docs/archaeology/README.md`](docs/archaeology/README.md)
 - [`docs/archaeology/TIMELINE.md`](docs/archaeology/TIMELINE.md)
+- [`docs/archaeology/ECOSYSTEM.md`](docs/archaeology/ECOSYSTEM.md)
 - [`docs/archaeology/INHERITANCE.md`](docs/archaeology/INHERITANCE.md)
 - [`docs/archaeology/SECURITY.md`](docs/archaeology/SECURITY.md)
 
