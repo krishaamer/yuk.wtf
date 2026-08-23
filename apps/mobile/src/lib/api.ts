@@ -1,3 +1,4 @@
+import * as Crypto from "expo-crypto";
 import { fetch } from "expo/fetch";
 import {
   getCapture,
@@ -117,7 +118,7 @@ export async function createCleanup(input: {
   endedAt?: string;
 }) {
   return postJson<{ interventionId: string; observationId: string; message: string }>("/api/cleanups", {
-    clientId: crypto.randomUUID(),
+    clientId: Crypto.randomUUID(),
     ...input,
   });
 }
