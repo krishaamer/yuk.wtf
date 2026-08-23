@@ -14,7 +14,8 @@ The trash monster is the first capture surface. It is not the whole product.
 
 - Next.js App Router
 - server routes for privileged ingestion
-- public server-rendered map, site and open-data surfaces
+- public server-rendered map, site, organization, campaign, history and open-data surfaces
+- protected operator consoles for moderation and campaign operations
 
 ### Mobile
 
@@ -24,8 +25,9 @@ The trash monster is the first capture surface. It is not the whole product.
 - client-generated UUIDs
 - retryable/idempotent synchronization
 - AI output cached locally after the first successful analysis so an upload retry does not spend another model call
+- native human correction and cleanup intervention flows
 
-The native client lives in `apps/mobile`. It is intentionally a second runtime rather than a web wrapper and is compatible with an Expo Go-first development flow.
+The native client lives in `apps/mobile`. It is intentionally a second runtime rather than a web wrapper.
 
 ### Data
 
@@ -35,6 +37,8 @@ The native client lives in `apps/mobile`. It is intentionally a second runtime r
 - RLS on every YUK core table
 - public-safe derived views for deliberately publishable records
 - transactional observation/classification/idempotency ingestion
+- transactional cleanup/intervention/campaign progress updates
+- reversible Site merge audit records
 
 ### AI and rules
 
@@ -46,29 +50,32 @@ Disposal recognition and disposal policy are separate. The model chooses a norma
 
 | Historical capability | YUK model | Surface | Status in rebuild |
 | --- | --- | --- | --- |
-| Report trashpoint | Observation + optional Site | web + native monster capture | implemented foundation |
+| Report trashpoint | Observation + optional Site | web + native monster capture | implemented |
 | Nearby trash map | Site current-belief projection | `/map` | implemented foundation |
-| Trashpoint detail | Site evidence history | `/sites/:id` | implemented foundation |
-| Photo evidence | private Media | capture + Storage | implemented foundation |
+| Trashpoint detail | Site evidence history | `/sites/:id` | implemented |
+| Photo evidence | private Media | capture + Storage | implemented |
 | Categories / amount | versioned Classification | AI + correction | implemented foundation |
-| Correct bad report | superseding Classification / Verification | correction UI | implemented foundation |
-| Cleaned status | Intervention + Verification | `/cleanup` | implemented foundation |
-| Open data web | public-safe derived views | `/data` | implemented foundation |
+| Correct bad report | superseding Classification | web + native correction | implemented |
+| Cleaned status | Intervention + Verification | web + native cleanup | implemented |
+| Open data web | public-safe derived views | `/data` | implemented |
 | Open data API | JSON views | `/api/open-data/*` | implemented foundation |
-| Offline reporting | SQLite operation log + idempotent server ingest | native capture + stomach queue | implemented foundation |
-| Teams | Organization | organization surfaces | schema ready |
-| Events / cleanup campaigns | Intervention + Organization | cleanup/event surfaces | schema ready |
-| Areas / leaders | jurisdiction + stewardship | organization/admin | to build |
+| Offline reporting | SQLite operation log + idempotent server ingest | native capture + stomach queue | implemented |
+| Teams | Organization | `/organizations` + admin | implemented foundation |
+| Events / cleanup campaigns | Campaign + Intervention + Site targets | `/campaigns` + admin | implemented foundation |
+| Areas / leaders | jurisdiction + time-bounded stewardship | organization/admin | implemented foundation |
 | Internationalization | locale-independent domain + translated UI | web/mobile | to build |
 | Authentication | private identity separate from evidence | account surfaces | to build |
-| Moderation | verification/merge/redaction queues | admin | to build |
-| Duplicate trashpoints | spatial + evidence matching and merge proposals | ingestion pipeline | implemented foundation |
+| Moderation | review queues + reversible decisions | `/admin/moderation` | implemented foundation |
+| Duplicate trashpoints | spatial/evidence matching + merge proposals | ingestion + admin | implemented |
+| Revert bad merge | Site merge audit + unmerge RPC | admin | implemented |
 | AI litter recognition | Classification | analysis pipeline | implemented foundation |
-| WADE / TrashAI datasets | Source + imported Observation | import jobs | schema ready |
-| Legacy WCD records | Source + imported Observation | import jobs | schema ready |
+| WADE / TrashAI datasets | Source + imported interpretation | import jobs | source model ready |
+| Legacy WCD records | Source + imported Observation | import jobs | source model ready |
+| Historical Open Data | provenance-preserving aggregate series | `/history` + API | implemented for global report timeline |
 | Disposal guidance | versioned authoritative rule | monster | Estonia national foundation implemented |
-| Brand intelligence | classification + aggregate views | data explorer | schema ready |
-| Public heatmaps | derived site/observation views | map | to build |
+| Brand intelligence | aggregate Classification view | `/data` + API | implemented foundation |
+| Material intelligence | aggregate Classification view | `/data` + API | implemented foundation |
+| Public heatmaps | coarse aggregate cells | `/data` + API | implemented foundation |
 | Protected areas / hazards | contextual layers + classification | capture/map | to build |
 
 ## Domain invariants
@@ -79,7 +86,7 @@ A Site is a persistent physical place or waste entity. Observations can be attac
 
 ### Cleanups do not delete sites
 
-A cleanup creates an Intervention and evidence. The Site remains because its history remains useful and waste can reappear. A later litter observation on a cleaned Site can move the believed state to `reappeared`.
+A cleanup creates an Intervention and evidence. The Site remains because its history remains useful and waste can reappear. A reported cleanup moves the Site to `cleaned`; `verified_clean` is reserved for later verification. A later litter observation can move a cleaned Site to `reappeared`.
 
 ### Corrections do not rewrite model output
 
@@ -101,10 +108,26 @@ The native client writes a capture to SQLite before making a network request. A 
 
 AI recognizes the object/material and maps it to a normalized rule key. When an authoritative rule exists for the jurisdiction and date, that rule supplies the disposal guidance. The model does not get to invent local policy.
 
+### Coordination does not own evidence
+
+Organizations, stewardship and campaigns coordinate action around Sites. They do not own or erase observations. Reporting remains possible outside an organization or campaign.
+
+### Ambiguous merges are reversible
+
+A Site merge records the source/target relationship and the exact observations/interventions moved. Operators can undo the merge instead of relying on irreversible deduplication.
+
+### Aggregate history stays aggregate
+
+Historical summary counts are stored as provenance-bearing aggregate series. They are not expanded into fabricated Observations. The inherited Open Data global timeline currently preserves 98 monthly points from 2009 through January 2018, ending at 217,317 cumulative reports.
+
 ## Current platform tables
 
 - `yuk_sources`
 - `yuk_organizations`
+- `yuk_jurisdictions`
+- `yuk_stewardships`
+- `yuk_campaigns`
+- `yuk_campaign_sites`
 - `yuk_sites`
 - `yuk_observations`
 - `yuk_media`
@@ -115,60 +138,53 @@ AI recognizes the object/material and maps it to a normalized rule key. When an 
 - `yuk_disposal_rules`
 - `yuk_sync_ops`
 - `yuk_site_match_proposals`
+- `yuk_site_merges`
+- `yuk_legacy_aggregate_series`
 
 ## Public contract
 
-The initial open-data contract is intentionally small:
+Current open-data routes include:
 
 - `/api/open-data/sites`
 - `/api/open-data/observations`
+- `/api/open-data/materials`
+- `/api/open-data/brands`
+- `/api/open-data/heatmap`
+- `/api/open-data/organizations`
+- `/api/open-data/campaigns`
+- `/api/open-data/history`
 
-These endpoints expose only database views whose geometry is rounded before it leaves PostgreSQL.
+Exact evidence geometry and originals are not exposed through these routes.
 
-## Repository direction
+## Operator contract
 
-The second runtime now exists at `apps/mobile`, but the root Next.js app stays in place for this slice so the production deployment is not churned solely for directory aesthetics.
+The admin interface is disabled unless `YUK_ADMIN_TOKEN` is configured server-side.
 
-As genuinely shared code grows, move toward:
+- `/admin/moderation` resolves duplicate proposals, uncertain classifications, public-media review and active merge reverts.
+- `/admin/operations` manages organizations, jurisdictions, stewardship, campaigns and campaign Site targets.
 
-```text
-apps/
-  web/
-  mobile/
-  admin/
-packages/
-  domain/
-  api/
-  sync/
-  taxonomy/
-  disposal/
-  ui-native/
-  ui-web/
-supabase/
-  migrations/
-```
+Database writes still use the server-only Supabase service role. Neither secret belongs in a public client bundle.
 
-Move code when two runtimes actually need the shared package, not just because a monorepo diagram looks cleaner.
-
-## Import strategy
+## Historical imports
 
 Historical and research systems are sources, not current truth.
 
-- World Cleanup Day legacy records → observations with `source = wcd-legacy`
-- Let's Do It World Open Data → observations with `source = ldiw-open-data`
-- WADE → classifications / source records with `source = wade-ai`
-- TrashAI → classifications / source records with `source = trash-ai`
+- World Cleanup Day legacy records → attributed legacy Observations when individual evidence is available
+- Let's Do It World Open Data aggregate graph → `yuk_legacy_aggregate_series`
+- WADE → attributed source/classification material where licensing and record structure allow
+- TrashAI → attributed source/classification material where licensing and record structure allow
 
-Imported coordinates and classifications retain their original timestamps and provenance. Import time is stored separately from observed time.
+Imported coordinates and classifications retain original timestamps and provenance. Import time is stored separately from observed time.
 
 ## Next large slices
 
-1. **Moderation and site resolution:** accept/reject merge proposals, explicit merge/unmerge, uncertain classifications, evidence redaction and cleanup verification.
-2. **Legacy import:** World Cleanup + Open Data first, then WADE / TrashAI lineage data where licensing and structure allow.
-3. **Organizations and campaigns:** teams, cleanup campaigns, stewardship and jurisdiction roles on the new model.
-4. **Native parity:** correction flow, nearby Site review, cleanup before/after capture, background retry and public nearby map.
-5. **Jurisdiction adapters:** municipal Estonia overrides where national rules are insufficient, followed by other countries.
-6. **Aggregate intelligence:** material, brand, recurrence, cleanup effectiveness, hotspots and research exports.
-7. **Internationalization and identity:** global language support plus optional account sync without making identity mandatory for basic contribution.
+1. **Legacy individual records:** import attributable World Cleanup/Open Data records where the source data is available, while preserving timestamps and source identity.
+2. **Native nearby map:** public nearby Sites, explicit candidate review before ambiguous attachment, and richer cleanup before/after capture.
+3. **Media privacy pipeline:** automated face/license-plate redaction and safe public derivatives.
+4. **Jurisdiction adapters:** municipality-level Estonia overrides where national rules are insufficient, followed by other countries.
+5. **Protected and hazard context:** access constraints, protected land and safety layers at capture/map time.
+6. **Internationalization:** rebuild the global language architecture rather than treating translation as polish.
+7. **Optional identity/account sync:** cross-device personal stomach/history and organization roles without making identity mandatory for basic contribution.
+8. **Research intelligence:** recurrence, cleanup effectiveness, material/brand trends and export formats for researchers.
 
 The rebuild is complete when the historical system's useful capabilities are represented by the modern domain model and accessible through YUK surfaces, not when every old screen has been copied pixel-for-pixel.
