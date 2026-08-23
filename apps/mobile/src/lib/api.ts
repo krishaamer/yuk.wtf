@@ -13,12 +13,16 @@ export type YukAnalysis = {
   material: string;
   emoji: "💩" | "🤢" | "🤮";
   verdict: string;
+  ruleKey?: string;
   bin: string;
   destination: string;
   reason: string;
   betterAlternative: string;
   confidence: "high" | "medium" | "low";
   locationNote: string;
+  disposalInstructions?: string;
+  guidanceSource?: string;
+  guidanceSourceUrl?: string;
 };
 
 export type PersistedObservation = {
@@ -26,6 +30,7 @@ export type PersistedObservation = {
   siteId: string | null;
   mediaStored: boolean;
   publicVisibility: "private" | "aggregate" | "public";
+  siteResolution?: "none" | "new" | "matched" | "proposed";
 };
 
 const API_URL = (process.env.EXPO_PUBLIC_YUK_API_URL || "https://yuk.wtf").replace(/\/$/, "");
@@ -64,11 +69,7 @@ export async function syncCapture(id: string) {
   await markSyncing(id);
   const location =
     capture.latitude != null && capture.longitude != null
-      ? {
-          latitude: capture.latitude,
-          longitude: capture.longitude,
-          accuracy: capture.accuracy ?? undefined,
-        }
+      ? { latitude: capture.latitude, longitude: capture.longitude, accuracy: capture.accuracy ?? undefined }
       : undefined;
 
   try {
@@ -76,10 +77,7 @@ export async function syncCapture(id: string) {
     if (capture.analysis_json) {
       analysis = JSON.parse(capture.analysis_json) as YukAnalysis;
     } else {
-      analysis = await postJson<YukAnalysis>("/api/analyse", {
-        image: capture.image_data,
-        location,
-      });
+      analysis = await postJson<YukAnalysis>("/api/analyse", { image: capture.image_data, location });
       await saveAnalysis(id, analysis);
     }
 
@@ -99,6 +97,29 @@ export async function syncCapture(id: string) {
     await markPending(id, message);
     throw error;
   }
+}
+
+export async function correctObservation(input: {
+  observationId: string;
+  item?: string;
+  material?: string;
+  bin?: string;
+  destination?: string;
+  note?: string;
+}) {
+  return postJson<{ correctionId: string }>("/api/corrections", input);
+}
+
+export async function createCleanup(input: {
+  siteId: string;
+  note?: string;
+  startedAt?: string;
+  endedAt?: string;
+}) {
+  return postJson<{ interventionId: string; observationId: string; message: string }>("/api/cleanups", {
+    clientId: crypto.randomUUID(),
+    ...input,
+  });
 }
 
 export async function syncPendingCaptures() {
