@@ -1,18 +1,17 @@
 type SupabaseMode = "service" | "public";
 
+const DEFAULT_URL = "https://suhdyvgijlismwfglsvf.supabase.co";
+const DEFAULT_PUBLISHABLE_KEY = "sb_publishable_ym56QqUoLM1oNtEXuBAkqw_2J3S25ql";
+
 function config(mode: SupabaseMode) {
-  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_URL;
   const key =
     mode === "service"
       ? process.env.SUPABASE_SERVICE_ROLE_KEY
-      : process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+      : process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || DEFAULT_PUBLISHABLE_KEY;
 
-  if (!url || !key) {
-    throw new Error(
-      mode === "service"
-        ? "YUK persistence is not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY."
-        : "YUK public data is not configured. Set the Supabase URL and publishable key.",
-    );
+  if (!key) {
+    throw new Error("YUK persistence is not configured. Set SUPABASE_SERVICE_ROLE_KEY on the server.");
   }
 
   return { url: url.replace(/\/$/, ""), key };
@@ -55,7 +54,7 @@ export async function uploadEvidence(path: string, bytes: Uint8Array, contentTyp
       "Content-Type": contentType,
       "x-upsert": "false",
     },
-    body: bytes,
+    body: Buffer.from(bytes),
   });
 
   if (!response.ok) {
