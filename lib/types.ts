@@ -26,6 +26,7 @@ export type YukAnalysis = {
   betterAlternative: string;
   confidence: "high" | "medium" | "low";
   locationNote: string;
+  disposalInstructions?: string;
   guidanceSource?: string;
   guidanceSourceUrl?: string;
 };
