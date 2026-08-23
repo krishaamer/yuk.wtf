@@ -98,7 +98,7 @@ export default async function CampaignPage({ params }: { params: Promise<{ slug:
                 <span className="label">{entry.role} · {entry.yuk_sites?.status.replaceAll("_", " ")}</span>
                 <h2><a href={`/sites/${entry.site_id}`}>{entry.yuk_sites?.title || "Unnamed waste site"}</a></h2>
                 <p>{entry.yuk_sites?.last_observed_at ? `Last evidence ${new Date(entry.yuk_sites.last_observed_at).toLocaleDateString("en-GB")}` : "No dated evidence yet."}</p>
-                <a className="text-link" href={`/cleanup?site=${entry.site_id}`}>we cleaned it</a>
+                <a className="text-link" href={`/cleanup?site=${entry.site_id}&campaign=${campaign.id}`}>we cleaned it</a>
               </article>
             )) : <article className="site-card"><h2>No public target Sites yet.</h2></article>}
           </div>
