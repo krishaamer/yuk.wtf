@@ -63,11 +63,14 @@ Two surviving 2018 development generations are preserved as immutable archive br
 
 The histories were explicitly reunited in 2026 by commit `b91228a`. Historical runtime code remains available through Git history and archive branches, but is no longer part of the active application tree.
 
+YUK also has a wider product/research lineage that is not literal Git ancestry: the Let's Do It World Open Data web/API projects, WADE AI and TrashAI. Together they trace the evolution from manual waste mapping toward open waste datasets and machine interpretation of litter imagery.
+
 For the archaeology, see:
 
 - [`docs/archaeology/README.md`](docs/archaeology/README.md)
 - [`docs/archaeology/TIMELINE.md`](docs/archaeology/TIMELINE.md)
 - [`docs/archaeology/INHERITANCE.md`](docs/archaeology/INHERITANCE.md)
+- [`docs/archaeology/EXTENDED-LINEAGE.md`](docs/archaeology/EXTENDED-LINEAGE.md)
 - [`docs/archaeology/SECURITY.md`](docs/archaeology/SECURITY.md)
 
 ## Next
