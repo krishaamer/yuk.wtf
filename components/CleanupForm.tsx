@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
-export function CleanupForm({ siteId = "" }: { siteId?: string }) {
+export function CleanupForm({ siteId = "", campaignId = "" }: { siteId?: string; campaignId?: string }) {
   const [state, setState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -18,6 +18,7 @@ export function CleanupForm({ siteId = "" }: { siteId?: string }) {
       body: JSON.stringify({
         clientId: crypto.randomUUID(),
         siteId: String(data.get("siteId") || "").trim(),
+        campaignId: String(data.get("campaignId") || "").trim() || undefined,
         note: String(data.get("note") || "").trim(),
         startedAt: String(data.get("startedAt") || "") || undefined,
         endedAt: String(data.get("endedAt") || "") || undefined,
@@ -43,6 +44,10 @@ export function CleanupForm({ siteId = "" }: { siteId?: string }) {
           <input name="siteId" defaultValue={siteId} required />
         </label>
         <label>
+          Campaign ID <em>optional</em>
+          <input name="campaignId" defaultValue={campaignId} />
+        </label>
+        <label>
           Started
           <input name="startedAt" type="datetime-local" />
         </label>
@@ -55,8 +60,8 @@ export function CleanupForm({ siteId = "" }: { siteId?: string }) {
         What happened?
         <textarea name="note" rows={4} placeholder="What was removed, what remained, anything unsafe or inaccessible…" />
       </label>
-      <button className="feed-button" disabled={state === "saving"}>
-        {state === "saving" ? "saving cleanup…" : "we cleaned it"}
+      <button className="feed-button" disabled={state === "saving" || state === "saved"}>
+        {state === "saving" ? "saving cleanup…" : state === "saved" ? "cleanup recorded ✓" : "we cleaned it"}
       </button>
       {message && <p className={`save-status save-status--${state === "saved" ? "saved" : "local-only"}`}>{message}</p>}
     </form>
