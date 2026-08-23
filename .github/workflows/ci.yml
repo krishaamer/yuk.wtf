@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  web:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -19,3 +19,17 @@ jobs:
           node-version: 20
       - run: npm install --no-audit --no-fund
       - run: npm run build
+
+  mobile-typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.13
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
