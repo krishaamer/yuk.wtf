@@ -1,17 +1,13 @@
 type SupabaseMode = "service" | "public";
 
 const DEFAULT_URL = "https://suhdyvgijlismwfglsvf.supabase.co";
-const DEFAULT_PUBLISHABLE_KEY = "sb_publishable_ym56QqUoLM1oNtEXuBAkqw_2J3S25ql";
 
-function config(mode: SupabaseMode) {
+function config(_mode: SupabaseMode) {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_URL;
-  const key =
-    mode === "service"
-      ? process.env.SUPABASE_SERVICE_ROLE_KEY
-      : process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || DEFAULT_PUBLISHABLE_KEY;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!key) {
-    throw new Error("YUK persistence is not configured. Set SUPABASE_SERVICE_ROLE_KEY on the server.");
+    throw new Error("YUK database access is not configured. Set SUPABASE_SERVICE_ROLE_KEY on the server.");
   }
 
   return { url: url.replace(/\/$/, ""), key };
