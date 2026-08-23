@@ -1,0 +1,24 @@
+{
+  "name": "yuk-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "expo": "^57.0.0",
+    "expo-camera": "~57.0.3",
+    "expo-crypto": "~57.0.1",
+    "expo-location": "~57.0.9",
+    "expo-router": "~57.0.12",
+    "expo-sqlite": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.0"
+  }
+}

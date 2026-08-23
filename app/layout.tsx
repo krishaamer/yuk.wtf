@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./platform.css";
 
 export const metadata: Metadata = {
-  title: "YUK.WTF | Feed me trash",
-  description: "A trash monster that eats your garbage and tells you what it is, where it goes, and why it is gross.",
+  title: "YUK.WTF | Waste intelligence that remembers",
+  description: "Feed trash to YUK, map litter as evidence, track persistent waste sites, and keep cleanup history instead of disposable reports.",
   manifest: "/manifest.webmanifest",
 };
 
