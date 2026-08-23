@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "YUK",
+    "slug": "yuk-wtf",
+    "scheme": "yuk",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "YUK uses the camera to identify and map waste.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "YUK uses your location when you choose to map litter in the physical world."
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "wtf.yuk.app"
+    },
+    "android": {
+      "package": "wtf.yuk.app"
+    },
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
