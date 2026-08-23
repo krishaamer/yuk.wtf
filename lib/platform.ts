@@ -32,6 +32,7 @@ export type PersistedObservation = {
   siteId: string | null;
   mediaStored: boolean;
   publicVisibility: PublicVisibility;
+  siteResolution?: "none" | "new" | "matched" | "proposed";
 };
 
 export type PublicSite = {
