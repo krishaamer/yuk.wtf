@@ -73,7 +73,10 @@ export default async function SitePage({ params }: { params: Promise<{ id: strin
           </div>
         </section>
 
-        <a className="code-link" href="/">Add another observation</a>
+        <div className="result-actions">
+          <a className="code-link" href="/">Add another observation</a>
+          <a className="code-link" href={`/cleanup?site=${site.id}`}>We cleaned it</a>
+        </div>
       </div>
     </main>
   );
